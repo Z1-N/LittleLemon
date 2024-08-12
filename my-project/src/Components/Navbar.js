@@ -33,10 +33,9 @@ const Nav = () => {
             </li>
           ))
         }
-        <Button>
-          Order Now
-        </Button>
+        <div className='mr-6 md:mr-0 grid grid-cols-1 grid-flow-row md:block gap-y-3 '>
         <Button><span className='inline'>My Orders</span><SlNote className='inline ml-3' /></Button>
+        </div>
       </ul>
       </div>
     </div>

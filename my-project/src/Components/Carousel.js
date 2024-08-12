@@ -7,7 +7,7 @@ function Carousel() {
   const slides = [
     {
       url: 'https://www.westernliving.ca/wp-content/uploads/AHID-KAMA-High-Res-005-1282x727.jpg',
-      description: 'Indulge in the rich and diverse flavors of the Mediterranean. Our menu features authentic dishes crafted with the finest ingredients, from savory falafel to succulent lamb kebabs. Savor the essence of the Mediterranean with every bite.',
+      description: 'Indulge in the rich and diverse flavors of the Mediterranean. Our menu features authentic dishes crafted with the finest ingredients ,Savor the essence of the Mediterranean with every bite.',
       title : 'Experience the Taste of Tradition'
     },
     {
@@ -49,8 +49,8 @@ function Carousel() {
 
   return (
     <div className='md:max-w-[1400px] mt-5 md:h-[680px] max-w-[640px] h-[480px] w-full py-16 px-4 relative group '>
-      <div className='absolute  z-10 text-white font-sans  font-semibold md:text-5xl text-3xl text-balance indent-4 mx-4 break-words   overflow-hidden leading-relaxed md:top-1/3 top-28 '>{slides[currentIndex].title}</div>
-      <div className='absolute  z-10 text-white font-sans   md:text-3xl sm:text-lg text-balance indent-4 mx-4 break-words  overflow-hidden leading-relaxed md:bottom-1/3 bottom-1/4 '>{slides[currentIndex].description}</div>
+      <div className='absolute  z-10 text-white font-sans  font-semibold md:text-5xl text-xl text-balance indent-4 mx-4 break-words   overflow-hidden md:leading-relaxed md:top-1/3 top-24 '>{slides[currentIndex].title}</div>
+      <div className='absolute  z-10 text-white font-sans   md:text-3xl text-sm text-balance indent-4 mx-4 break-words  overflow-hidden md:leading-relaxed md:bottom-1/3 bottom-1/4 '>{slides[currentIndex].description}</div>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='w-full h-full rounded-2xl bg-center bg-cover duration-500 text-white text-center text-4xl font-serif font-bold relative z-0 brightness-50'
