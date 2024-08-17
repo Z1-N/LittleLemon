@@ -11,7 +11,7 @@ import { FaSquareFacebook } from "react-icons/fa6";
 const Footer = () => {
     return (
         <footer className='w-full'>
-            <div className='w-full  bg-slate-900  grid grid-cols-5  md:gap-x-6 p-4  md:p-10 text-slate-500'>
+            <div className='w-full  bg-slate-900 grid grid-cols-5  md:gap-x-6 p-4  md:p-10 text-slate-500'>
                     <div className='mt-3 ml-3 grid grid-col-2 grid-flow-col md:gap-x-5'>
                         <img src={FooterLogo} alt='Logo' className='w-[32px] md:w-[54px]' />
                         <p className='md:text-sm  md:block hidden '>Little Lemon a world of delicacy, We serve the best food for your taste.</p>
