@@ -3,17 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nextui-org/date-picker": "^2.1.6",
+    "@nextui-org/system": "^2.2.5",
+    "@nextui-org/theme": "^2.2.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "formik": "^2.4.6",
     "ionicons": "^7.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-ionicons": "^4.2.1",
+    "react-rainbow-components": "^1.32.0",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

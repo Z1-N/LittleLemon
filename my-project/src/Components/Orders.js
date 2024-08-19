@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef,useEffect } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
@@ -9,12 +9,20 @@ import { useNavigate } from 'react-router-dom';
 
 
     const Orders = () => {
+
         
-        const { cartList , addItem  , updateCart , deleteItem , decrementQuantity , getCartCount} = useCart();
+        const topRef = useRef(null);
+        const { cartList , addItem  , updateCart , deleteItem , decrementQuantity , getCartCount , clearCart} = useCart();
         const [customerOrders, setCustomerOrders] = useState(cartList);
         const navigate = useNavigate();
+        
+        useEffect(() => {
+            if (topRef.current) {
+                window.scrollTo(0,0)
+            }
+        }, []);
 
-       const handleIncrement = (orders) => {
+        const handleIncrement = (orders) => {
         updateCart(orders.id ,orders.quantity ); // Update the cart context
         addItem(orders); // Update the cart context
         setCustomerOrders(prevOrders => {
@@ -56,9 +64,13 @@ import { useNavigate } from 'react-router-dom';
         });
 
     };
+    const handlePlaceOrder = () => {
+        clearCart();
+        navigate('/Checkout', { state: { confirmation: true } });
+    }
 
         return (
-            <div className="bg-[#495E57] p-4">
+            <div ref={topRef} className="bg-[#495E57] p-4">
                 <h2 className="md:text-3xl text-2xl  font-bold text-white mt-28 mb-4">My Orders</h2>
                 <hr className='mb-10 -mt-3 w-1/5 text-grey-200'></hr>
                 {customerOrders.length === 0 ? (
@@ -71,7 +83,7 @@ import { useNavigate } from 'react-router-dom';
                         </div>
                     </div>
                 ) : (
-                    <div className="grid md:grid-cols-2 gap-3 bg-slate-900 rounded-lg p-5">
+                    <div className="grid md:grid-cols-2 gap-3 bg-slate-900 rounded-lg p-5 " ref={topRef}>
                         <div className="col-span-1 gap-y-3">
                         {customerOrders.map((order) => (
                             <div className='my-3'>
@@ -133,7 +145,7 @@ import { useNavigate } from 'react-router-dom';
 
                             <div className='mt-auto'>
                              <button
-                                onClick={() => navigate('/Checkout')}
+                                onClick={() => handlePlaceOrder()}
                                 class="flex items-center mt-5 bg-red-500 gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-white uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-red-700"
                                 type="button">
                                 Place The Order

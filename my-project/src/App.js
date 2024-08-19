@@ -7,6 +7,8 @@ import Orders from "./Components/Orders";
 import PageNotFound from "./Components/PageNotFound";
 import { CartProvider } from './Context/CartContext';
 import Checkout from "./Components/Checkout";
+import BookingDetails from "./Components/BookingDetails";
+
 function App() {
   return (
     <CartProvider>
@@ -15,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Page/>} />
         <Route path="/Bookings" element={<BookingForm />} />
+        <Route path="/booking-details" element={<BookingDetails />} />
         <Route path="/Orders" element={<Orders/>} />
         <Route path="*" element={<PageNotFound/>} />
         <Route path="/Checkout" element={<Checkout/>}/>

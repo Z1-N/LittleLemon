@@ -58,11 +58,14 @@ const deleteItem = (productId) => {
   });
 };
 
+const clearCart = () => {
+  setCartList([]);
+};
 
 
 
 return (
-    <CartContext.Provider value={{ cartList, addToCart, getCartCount  , updateCart , addItem  , decrementQuantity ,deleteItem ,getCartCount }}>
+    <CartContext.Provider value={{ cartList, addToCart, getCartCount  , updateCart , addItem  , decrementQuantity ,deleteItem , clearCart  }}>
       {children}
     </CartContext.Provider>
   );
