@@ -6,14 +6,19 @@ const CartContext = createContext();
 // Create the provider component
 export const CartProvider = ({ children }) => {
   const [cartList, setCartList] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
-    const updatedCartItems = [...cartItems, product];
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    setCartList((prevCartList) => {
+      const cartItem = prevCartList.find((item) => item.id === product.id);
+      if (cartItem) {
+        return prevCartList.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevCartList, { ...product, quantity: 1 }];
+      }
+    });
   };
-
 
   const getCartCount = () => {
     return cartList.reduce((count, item) => count + item.quantity, 0);
@@ -60,7 +65,7 @@ const clearCart = () => {
 
 
 return (
-    <CartContext.Provider value={{ cartList, addToCart, getCartCount  , updateCart , addItem  , decrementQuantity ,deleteItem , clearCart , set  }}>
+    <CartContext.Provider value={{ cartList, addToCart, getCartCount  , updateCart , addItem  , decrementQuantity ,deleteItem , clearCart  }}>
       {children}
     </CartContext.Provider>
   );
