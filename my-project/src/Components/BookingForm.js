@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'; // Import Yup for validation schema
-import { FaPhone, FaEnvelope, FaUsers, FaCalendarAlt } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaUsers, FaCalendarAlt ,FaUser } from 'react-icons/fa';
 import { Input, DateTimePicker, Button } from 'react-rainbow-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
@@ -17,6 +17,8 @@ const BookingForm = () => {
     }, []);
   // Define the validation schema using Yup with custom validation for working hours
   const validationSchema = Yup.object({
+    name: Yup.string()
+      .required('Name is required'),
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Phone number must be digits only")
       .min(10, "Phone number must be at least 10 digits")
@@ -70,6 +72,33 @@ const BookingForm = () => {
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const lastDayOfYear = new Date(now.getFullYear(), now.getMonth() + 12, 0);
 
+  
+  const handleSubmit = (values, { setSubmitting, setErrors }) => {
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const isDuplicate = existingBookings.some(booking => {
+      const bookingDate = new Date(booking.appointment).toDateString();
+      const newBookingDate = new Date(values.appointment).toDateString();
+      return (booking.name === values.name || booking.email === values.email) && bookingDate === newBookingDate;
+    });
+
+    if (isDuplicate) {
+      setErrors({ appointment: 'You have already booked for this date.' });
+      setSubmitting(false);
+    } else {
+      setTimeout(() => {
+        const isSuccess = Math.random() > 0.5;
+        setSubmissionResult(isSuccess);
+        setSubmitting(false);
+        if (isSuccess) {
+          const updatedBookings = [...existingBookings, values];
+          localStorage.setItem('bookings', JSON.stringify(updatedBookings));
+          navigate('/booking-details', { state: { booking: values } });
+        }
+      }, 400);
+    }
+  };
+
+
   return (
     <div ref={topRef} className="container mx-auto p-4">
       <div className="max-w-md mx-auto bg-white p-8 my-20 rounded-lg shadow-lg transition-transform transform hover:scale-105">
@@ -80,21 +109,22 @@ const BookingForm = () => {
           </div>
         )}
         <Formik
-          initialValues={{ phone: '', email: '', appointment: '', guests: 1 }}
+          initialValues={{ name: '', phone: '', email: '', appointment: '', guests: 1 }}
           validationSchema={validationSchema}  // Pass the validation schema
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              const isSuccess = Math.random() > 0.5;
-              setSubmissionResult(isSuccess);
-              setSubmitting(false);
-              if (isSuccess) {
-                navigate('/booking-details', { state: { booking: values } });
-              }
-            }, 400);
-          }}
+          onSubmit={handleSubmit}  // Pass the submit handler function
         >
           {({ isSubmitting, handleChange, setFieldValue, values }) => (
             <Form>
+            <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+                  <FaUser className="inline mr-2  text-blue-500" /> Full Name
+                  <Input id="name"
+                  name="name"
+                  placeholder="Enter your Full Name"
+                  className="w-full px-4 py-2  rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out" onChange={handleChange} value={values.name} />
+                  <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
+                </label>
+              </div>
               <div className="mb-4">
                 <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
                   <FaPhone className="inline mr-2 rotate-90 text-blue-500" /> Phone Number
